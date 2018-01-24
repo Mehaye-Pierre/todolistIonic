@@ -1,3 +1,4 @@
+import { IdService } from './../providers/id-service/id-service';
 import { ListComponent } from './../components/list/list';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -41,6 +42,7 @@ import { TodoItemComponent } from '../components/todo-item/todo-item';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    IdService,
     TodoServiceProvider
   ]
 })

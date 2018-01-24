@@ -1,10 +1,15 @@
 <!-- Generated template for the TodoItemComponent component -->
 <div>
-    <span>{{item.name}}</span>
-    <div *ngFor="let todo of item.items">
-        {{todo.name}} {{todo.desc}} Terminé {{todo.complete}};
-    </div>
+    {{item.name}}
+    <ion-card *ngFor="let todo of item.items">
+        <ion-card-header>{{todo.name}} </ion-card-header>
+        <ion-card-content>{{todo.desc}} Terminé :
+            <input type="checkbox" [checked]="todo.complete" (click)="changeState(todo,todo.complete)">
+        </ion-card-content>
+        <button (click)="showPromptEdit(todo)">Editer</button>
+        <button (click)="delete(todo.uuid)">Supprimer</button>
+    </ion-card>
 
 </div>
-
+<button (click)="showPrompt()">Ajouter un TODO</button>
 <button (click)="goBack()">Retour</button>
