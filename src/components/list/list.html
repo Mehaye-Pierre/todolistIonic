@@ -1,0 +1,5 @@
+<ion-list>
+    <button ion-item *ngFor="let td of tdList; let i=index" (click)="goToPage(td)">
+    {{ td.name }}   Tâches à terminer : {{ countUnfinishedTask(td)}}
+  </button>
+</ion-list>

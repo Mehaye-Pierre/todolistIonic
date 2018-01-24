@@ -1,0 +1,10 @@
+<!-- Generated template for the TodoItemComponent component -->
+<div>
+    <span>{{item.name}}</span>
+    <div *ngFor="let todo of item.items">
+        {{todo.name}} {{todo.desc}} Terminé {{todo.complete}};
+    </div>
+
+</div>
+
+<button (click)="goBack()">Retour</button>
