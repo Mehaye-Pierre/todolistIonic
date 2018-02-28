@@ -8,3 +8,10 @@
 </ion-list>
 
 <button (click)="showPrompt()">Ajouter une liste</button>
+
+<div *ngIf="userBool">
+    <button (click)="login()">Login google</button>
+</div>
+<div *ngIf="!userBool">
+    <button (click)="login()">Changer de login google</button>
+</div>

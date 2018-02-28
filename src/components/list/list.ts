@@ -6,6 +6,9 @@ import { Observable } from 'rxjs/Observable';
 import { NavController } from 'ionic-angular';
 import { TodoItemComponent } from '../todo-item/todo-item';
 import { AlertController } from 'ionic-angular';
+import { Firebase } from '@ionic-native/firebase';
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
 
 /**
  * Generated class for the ListComponent component.
@@ -20,14 +23,28 @@ import { AlertController } from 'ionic-angular';
 export class ListComponent {
 
   public tdList: TodoList[] = [];
+  public userState ='';
+  public userBool = false;
 
   constructor(private todoservice: TodoServiceProvider,
     public navCtrl: NavController,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController,
+    public auth: AngularFireAuth) {
   }
 
   public ngOnInit(): void {
     this.todoservice.getList().subscribe(tmpList => this.tdList = tmpList);
+    this.auth.auth.onAuthStateChanged(function(user) {
+      if (user) {
+        this.userState = 'Vous êtes connecté '+user.displayName;
+        this.userBool = true;
+        console.log(this.userState);
+      } else {
+        this.userState = 'Vous n\' êtes pas connecté';
+        this.userBool = false;
+        console.log(this.userState);
+      }
+    });
   }
 
 
@@ -62,12 +79,12 @@ export class ListComponent {
       ],
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Annuler',
           handler: data => {
           }
         },
         {
-          text: 'Save',
+          text: 'Sauvegarder',
           handler: data => {
             this.todoservice.addList(data.Title);
           }
@@ -102,6 +119,12 @@ export class ListComponent {
       ]
     });
     prompt.present();
+  }
+
+  login() {
+    return this.auth.auth
+      .signInWithRedirect(new firebase.auth.GoogleAuthProvider())     
+      .catch(err => {console.log(err)});
   }
 
 }
