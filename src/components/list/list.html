@@ -1,3 +1,5 @@
+{{userState}}
+
 <ion-list *ngFor="let td of tdList; let i=index">
     <button ion-item (click)="goToPage(td)">
     {{ td.name }}   Tâches à terminer : {{ countUnfinishedTask(td)}}
@@ -9,9 +11,9 @@
 
 <button (click)="showPrompt()">Ajouter une liste</button>
 
-<div *ngIf="userBool">
+<div *ngIf="!userBool">
     <button (click)="login()">Login google</button>
 </div>
-<div *ngIf="!userBool">
-    <button (click)="login()">Changer de login google</button>
+<div *ngIf="userBool">
+    <button (click)="logout()">Se déconnecter</button>
 </div>

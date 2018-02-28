@@ -19,6 +19,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { HttpModule } from '@angular/http';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFirestore, AngularFirestoreModule } from 'angularfire2/firestore';
 
 const config = {
   apiKey: "AIzaSyD8aEyX7MvDRIuppwGKbYEhxc5RgLm8XtY",
@@ -43,6 +44,7 @@ const config = {
     BrowserModule,
     HttpModule,
     AngularFireDatabaseModule,
+    AngularFirestoreModule,
     AngularFireModule.initializeApp(config),
     IonicModule.forRoot(MyApp)
   ],
@@ -62,7 +64,8 @@ const config = {
     IdService,
     TodoServiceProvider,
     FirebaseProvider,
-    AngularFireAuth
+    AngularFireAuth,
+    AngularFirestoreModule
   ]
 })
 export class AppModule {}

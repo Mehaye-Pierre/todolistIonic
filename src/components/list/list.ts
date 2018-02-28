@@ -9,6 +9,7 @@ import { AlertController } from 'ionic-angular';
 import { Firebase } from '@ionic-native/firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+import { FirebaseProvider } from '../../providers/firebase/firebase';
 
 /**
  * Generated class for the ListComponent component.
@@ -27,26 +28,32 @@ export class ListComponent {
   public userBool = false;
 
   constructor(private todoservice: TodoServiceProvider,
+    private todoserviceFirebase: FirebaseProvider,
     public navCtrl: NavController,
     public alertCtrl: AlertController,
     public auth: AngularFireAuth) {
   }
 
   public ngOnInit(): void {
-    this.todoservice.getList().subscribe(tmpList => this.tdList = tmpList);
-    this.auth.auth.onAuthStateChanged(function(user) {
+    this.auth.auth.onAuthStateChanged(user => {
       if (user) {
         this.userState = 'Vous êtes connecté '+user.displayName;
         this.userBool = true;
+        console.log(user.uid);
+        this.todoserviceFirebase.setService(user.uid)
+        this.todoserviceFirebase.getList().subscribe(tmpList => this.tdList = tmpList);
         console.log(this.userState);
+        console.log(this.tdList);
       } else {
         this.userState = 'Vous n\' êtes pas connecté';
         this.userBool = false;
         console.log(this.userState);
       }
     });
+    
+    //this.todoserviceFirebase.getList().subscribe(tmpList => this.tdList = tmpList);
+    
   }
-
 
   public countUnfinishedTask(tl: TodoList): number{
     var res = 0;
@@ -121,10 +128,15 @@ export class ListComponent {
     prompt.present();
   }
 
-  login() {
-    return this.auth.auth
-      .signInWithRedirect(new firebase.auth.GoogleAuthProvider())     
+  public login() {
+    this.auth.auth
+      .signInWithPopup(new firebase.auth.GoogleAuthProvider())     
       .catch(err => {console.log(err)});
+    
+  }
+
+  public logout() {
+    return this.auth.auth.signOut();
   }
 
 }

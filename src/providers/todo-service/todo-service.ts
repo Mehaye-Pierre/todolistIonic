@@ -5,6 +5,9 @@ import {TodoItem, TodoList} from '../../model/model';
 import {Observable} from "rxjs/Observable";
 import 'rxjs/Rx';
 
+/*
+Not used anymore, left for test purpose
+*/
 
 @Injectable()
 export class TodoServiceProvider {
