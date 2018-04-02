@@ -2,6 +2,7 @@ import { TodoItem, TodoList } from './../../model/model';
 import { Component, Input } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { TodoServiceProvider } from '../../providers/todo-service/todo-service';
+import { FirebaseProvider } from '../../providers/firebase/firebase';
 
 
 /**
@@ -19,13 +20,15 @@ export class TodoItemComponent {
   public item: TodoList;
 
   constructor(private todoservice: TodoServiceProvider,
-    public navParams: NavParams, 
+    public navParams: NavParams,
+    private todoserviceFirebase: FirebaseProvider,
     public navCtrl : NavController,
     public alertCtrl: AlertController) {
   }
 
   public ngOnInit(): void {
     this.item = this.navParams.get('idList');
+    this.todoserviceFirebase.getSingleList(this.item.uuid).subscribe(tmpList => this.item = tmpList);
   }
 
   public goBack(): void{
@@ -37,7 +40,7 @@ export class TodoItemComponent {
   }
 
   public changeState(editedItem: TodoItem, state : boolean): void{
-    this.todoservice.editStateTodo(this.item.uuid,editedItem,!state);
+    this.todoserviceFirebase.editStateTodo(this.item,editedItem,!state);
   }
 
   public showPrompt() {
@@ -63,7 +66,7 @@ export class TodoItemComponent {
         {
           text: 'Sauvegarder',
           handler: data => {
-            this.todoservice.addTodo(this.item.uuid,data.Title,data.Desc);
+            this.todoserviceFirebase.addTodo(this.item,data.Title,data.Desc);
           }
         }
       ]
@@ -94,8 +97,8 @@ export class TodoItemComponent {
         {
           text: 'Sauvegarder',
           handler: data => {
-            this.todoservice.editDescTodo(this.item.uuid,todoitem,data.Desc);
-            this.todoservice.editNameTodo(this.item.uuid,todoitem,data.Title);
+            this.todoserviceFirebase.editDescTodo(this.item,todoitem,data.Desc);
+            this.todoserviceFirebase.editNameTodo(this.item,todoitem,data.Title);
           }
         }
       ]

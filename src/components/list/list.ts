@@ -70,8 +70,8 @@ export class ListComponent {
     this.navCtrl.push(TodoItemComponent,{'idList': idList});
   }
 
-  public delete(id : String): void{
-    this.todoservice.deleteList(id);
+  public delete(list : TodoList): void{
+    this.todoserviceFirebase.deleteList(list);
   }
 
   public showPrompt() {
@@ -93,7 +93,7 @@ export class ListComponent {
         {
           text: 'Sauvegarder',
           handler: data => {
-            this.todoservice.addList(data.Title);
+            this.todoserviceFirebase.addList(data.Title);
           }
         }
       ]
@@ -120,7 +120,7 @@ export class ListComponent {
         {
           text: 'Sauvegarder',
           handler: data => {
-            this.todoservice.editList(td.uuid,data.Title);
+            this.todoserviceFirebase.editList(td,data.Title);
           }
         }
       ]
