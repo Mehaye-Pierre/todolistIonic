@@ -35,6 +35,10 @@ export class ListComponent {
   }
 
   public ngOnInit(): void {
+    this.loadFirebaseServices();
+  }
+
+  public loadFirebaseServices(){
     this.auth.auth.onAuthStateChanged(user => {
       if (user) {
         this.userState = 'Vous êtes connecté '+user.displayName;
@@ -47,12 +51,11 @@ export class ListComponent {
       } else {
         this.userState = 'Vous n\' êtes pas connecté';
         this.userBool = false;
+        this.tdList = [];
+        this.todoserviceFirebase.logoutService();
         console.log(this.userState);
       }
     });
-    
-    //this.todoserviceFirebase.getList().subscribe(tmpList => this.tdList = tmpList);
-    
   }
 
   public countUnfinishedTask(tl: TodoList): number{
@@ -132,11 +135,12 @@ export class ListComponent {
     this.auth.auth
       .signInWithPopup(new firebase.auth.GoogleAuthProvider())     
       .catch(err => {console.log(err)});
-    
+    this.loadFirebaseServices();
   }
 
   public logout() {
-    return this.auth.auth.signOut();
+    this.auth.auth.signOut();
+    this.loadFirebaseServices();
   }
 
 }

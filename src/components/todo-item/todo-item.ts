@@ -35,8 +35,8 @@ export class TodoItemComponent {
     this.navCtrl.pop();
   }
 
-  public delete(id : String): void{
-    this.todoservice.deleteTodo(this.item.uuid, id);
+  public delete(todoitem : TodoItem): void{
+    this.todoserviceFirebase.deleteTodo(this.item,todoitem);
   }
 
   public changeState(editedItem: TodoItem, state : boolean): void{

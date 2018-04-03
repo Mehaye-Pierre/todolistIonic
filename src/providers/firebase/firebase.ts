@@ -37,6 +37,12 @@ export class FirebaseProvider {
     });
   }
 
+  public logoutService(){
+    this.userId = null;
+    this.todoCol = null;
+    this.data = null;
+  }
+
   public getNewTodoID(list: TodoList):String{
     let res = -1;
     list.items.map(a =>{
@@ -113,8 +119,10 @@ export class FirebaseProvider {
     })
     this.afs.collection(this.userId).doc(list.uuid).update({items: list.items})
   }
-  
 
-
+  public deleteTodo(list: TodoList, editedItem: TodoItem) {
+    list.items = list.items.filter(a => a.uuid !== editedItem.uuid);
+    this.afs.collection(this.userId).doc(list.uuid).update({items: list.items})
+  }
 
 }
