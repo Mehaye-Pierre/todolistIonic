@@ -6,10 +6,10 @@
         <ion-card-content>{{todo.desc}} Terminé :
             <input type="checkbox" [checked]="todo.complete" (click)="changeState(todo,todo.complete)">
         </ion-card-content>
-        <button (click)="showPromptEdit(todo)">Editer</button>
-        <button (click)="delete(todo)">Supprimer</button>
+        <button ion-button color="secondary" (click)="showPromptEdit(todo)">Editer</button>
+        <button ion-button color="danger" (click)="delete(todo)">Supprimer</button>
     </ion-card>
 
 </div>
-<button (click)="showPrompt()">Ajouter un TODO</button>
-<button (click)="goBack()">Retour</button>
+<button ion-button (click)="showPrompt()">Ajouter un TODO</button>
+<button ion-button color="dark" (click)="goBack()">Retour</button>

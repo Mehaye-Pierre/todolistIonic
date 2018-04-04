@@ -132,15 +132,24 @@ export class ListComponent {
   }
 
   public login() {
+    var provider = new firebase.auth.GoogleAuthProvider();
+
+    provider.addScope('https://www.googleapis.com/auth/plus.login');
+
     this.auth.auth
-      .signInWithPopup(new firebase.auth.GoogleAuthProvider())     
+      .signInWithRedirect(provider)
+      .then(function() {
+        return this.auth.auth.getRedirectResult();
+      })
       .catch(err => {console.log(err)});
-    this.loadFirebaseServices();
+    
+      
+      
   }
 
   public logout() {
     this.auth.auth.signOut();
-    this.loadFirebaseServices();
+    //this.loadFirebaseServices();
   }
 
 }
