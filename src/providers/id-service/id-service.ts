@@ -4,6 +4,9 @@ import {TodoItem, TodoList} from '../../model/model';
 import {Observable} from "rxjs/Observable";
 import 'rxjs/Rx';
 
+/**
+ * Not used anymore
+ */
 
 @Injectable()
 export class IdService {
